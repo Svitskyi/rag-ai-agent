@@ -1,0 +1,259 @@
+{
+  "name": "Jenkins errors knowledge RAG agent",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "/",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        20,
+        220
+      ],
+      "id": "ff837ef1-1414-4021-9dce-c5985748fbe3",
+      "name": "Webhook",
+      "webhookId": "cc4d3823-5acd-48d0-a986-af88c5b7e37b"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        220
+      ],
+      "id": "eb7cbe42-358c-4e60-b3b4-0c22fec3d587",
+      "name": "Respond to Webhook",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "content": "## RAG AI Agent with webhook interface\n",
+        "height": 700,
+        "width": 1460,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -60,
+        -20
+      ],
+      "typeVersion": 1,
+      "id": "eb9ee509-6158-46f8-90ee-8f8a5eefa550",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "knowledge_base_fix",
+          "mode": "name"
+        },
+        "limit": 1,
+        "where": {
+          "values": [
+            {
+              "column": "metadata",
+              "value": "={{ $json.document.metadata }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        580,
+        220
+      ],
+      "id": "d0d65961-bc92-482a-9772-8f710dd80f87",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "53910Kw0fGp6TdST",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "load",
+        "tableName": "knowledge_base_error",
+        "prompt": "=Return top similarity score to {{ $json.body.input_error_text }}",
+        "topK": 1,
+        "options": {
+          "distanceStrategy": "cosine"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1,
+      "position": [
+        220,
+        220
+      ],
+      "id": "af39e6a8-c614-47d6-a739-9a1ab477f02b",
+      "name": "Postgres PGVector Store",
+      "credentials": {
+        "postgres": {
+          "id": "53910Kw0fGp6TdST",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/text-embedding-004"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        200,
+        420
+      ],
+      "id": "ed276b4b-1c6f-4b1b-b065-7e8749ed1625",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "s2XEVsBMW3YQjilI",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Try understand what console output error mean based on the input:\nTool: {{ $json.tool }}\nLanguage: {{ $json.language }}\nFix suggested: {{ $json.fix }}\n\nOutput using format below:\nReasoning: add_reasoning_here\nFix: {{ $json.fix }}\n\nDont generate anything else except reasoning and fix",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        760,
+        220
+      ],
+      "id": "93e188e1-4b62-453e-b6c2-8a1e2bb5bcf0",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro-exp-03-25",
+        "options": {
+          "temperature": 0
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        700,
+        440
+      ],
+      "id": "96c97cdb-9721-43af-833f-c167fc879991",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "s2XEVsBMW3YQjilI",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        []
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres PGVector Store": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "9cffe85e-6a79-4361-a2c8-7656fbfa529e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "15c83c7e1f5793fd746c4325c7a81c277cbf64cd41b430efbdc07eaf23e84ca3"
+  },
+  "id": "KQZ5fX1olhrOVGa3",
+  "tags": []
+}
