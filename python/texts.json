@@ -1,0 +1,296 @@
+[
+    {
+        "Error": "Caused by: java.lang.AbstractMethodError: null",
+        "Fix": "Update Hibernate version to version 7.7.7. Or use some other tool.",
+        "Language": "Java",
+        "Tool": "Maven"
+    },
+    {
+        "Error": "Caused by: java.lang.NullPointerExceptions",
+        "Fix": "It looks like you need to check your code for programmers error.",
+        "Language": "Java",
+        "Tool": "Maven"
+    },
+    {
+        "Error": "Caused by: com.crazybobz.MySuperCustomException",
+        "Fix": "This error cannot be fixed (unfortunately). Go have some tea.",
+        "Language": "Java",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "Cocoapods failed to download",
+        "Fix": "Ask Oleg",
+        "Language": "Swift",
+        "Tool": "Fastlane"
+    },
+    {
+        "Error": "SyntaxError: Unexpected token",
+        "Fix": "Check for missing semicolons or brackets in your code.",
+        "Language": "JavaScript",
+        "Tool": "Node.js"
+    },
+    {
+        "Error": "Caused by: org.hibernate.MappingException: Unknown entity",
+        "Fix": "Check your Hibernate configuration and ensure all entities are correctly mapped.",
+        "Language": "Java",
+        "Tool": "Spring Boot"
+    },
+    {
+        "Error": "ModuleNotFoundError: No module named 'flask'",
+        "Fix": "Install Flask using pip: pip install flask",
+        "Language": "Python",
+        "Tool": "pip"
+    },
+    {
+        "Error": "Segmentation fault (core dumped)",
+        "Fix": "Check for invalid memory access or null pointer dereferencing.",
+        "Language": "C++",
+        "Tool": "gdb"
+    },
+    {
+        "Error": "OutOfMemoryError: Java heap space",
+        "Fix": "Increase the Java heap size with -Xmx argument.",
+        "Language": "Java",
+        "Tool": "JVM"
+    },
+    {
+        "Error": "FileNotFoundError: [Errno 2] No such file or directory",
+        "Fix": "Check if the file path is correct or if the file exists.",
+        "Language": "Python",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "Error 404: Page not found",
+        "Fix": "Check the URL or ensure the page exists on the server.",
+        "Language": "N/A",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "TypeError: 'NoneType' object is not callable",
+        "Fix": "Make sure you're calling the correct object and it isn't None.",
+        "Language": "Python",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "CMake Error: The source directory does not exist",
+        "Fix": "Verify the directory path and ensure the source directory is present.",
+        "Language": "C++",
+        "Tool": "CMake"
+    },
+    {
+        "Error": "Caused by: org.springframework.beans.factory.BeanCreationException",
+        "Fix": "Check your Spring configuration files for missing beans or incorrect definitions.",
+        "Language": "Java",
+        "Tool": "Spring Framework"
+    },
+    {
+        "Error": "AttributeError: 'str' object has no attribute 'items'",
+        "Fix": "Ensure you're calling `.items()` on a dictionary, not a string.",
+        "Language": "Python",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "HTTPError 403: Forbidden",
+        "Fix": "Check your permissions or the API's access control settings.",
+        "Language": "N/A",
+        "Tool": "Curl"
+    },
+    {
+        "Error": "EACCES: permission denied, open '/var/log/myapp.log'",
+        "Fix": "Ensure the application has the necessary file permissions.",
+        "Language": "N/A",
+        "Tool": "Linux"
+    },
+    {
+        "Error": "ImportError: cannot import name 'urlopen'",
+        "Fix": "Make sure you're importing the correct module: from urllib.request import urlopen.",
+        "Language": "Python",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "Cannot read property 'name' of undefined",
+        "Fix": "Ensure that the object you're trying to access exists and is not undefined.",
+        "Language": "JavaScript",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "MemoryError",
+        "Fix": "Increase system memory or optimize code to reduce memory consumption.",
+        "Language": "Python",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "error:0308010C:digital envelope routines::unsupported",
+        "Fix": "Upgrade Node.js to version 17 or higher for compatibility with OpenSSL.",
+        "Language": "JavaScript",
+        "Tool": "Node.js"
+    },
+    {
+        "Error": "ModuleNotFoundError: No module named 'requests'",
+        "Fix": "Install the requests library: pip install requests",
+        "Language": "Python",
+        "Tool": "pip"
+    },
+    {
+        "Error": "Permission denied while accessing /etc/hosts",
+        "Fix": "Run the command with elevated permissions (e.g., sudo).",
+        "Language": "Linux",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "SocketTimeoutException: timeout",
+        "Fix": "Increase the timeout limit or check your network connection.",
+        "Language": "Java",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "InvalidArgumentException: Argument cannot be null",
+        "Fix": "Ensure all required arguments are provided to the function.",
+        "Language": "Java",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "Failed to build Java project: Compilation failed",
+        "Fix": "Check your source code for syntax errors and missing dependencies.",
+        "Language": "Java",
+        "Tool": "Maven"
+    },
+    {
+        "Error": "NotFoundError: No such file or directory",
+        "Fix": "Ensure the file exists at the specified path.",
+        "Language": "Python",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "Caused by: org.apache.ibatis.exceptions.PersistenceException",
+        "Fix": "Verify your SQL query and check the database connection configuration.",
+        "Language": "Java",
+        "Tool": "MyBatis"
+    },
+    {
+        "Error": "ModuleNotFoundError: No module named 'numpy'",
+        "Fix": "Install numpy using pip: pip install numpy",
+        "Language": "Python",
+        "Tool": "pip"
+    },
+    {
+        "Error": "Connection refused",
+        "Fix": "Check if the server is running and accepting connections on the specified port.",
+        "Language": "N/A",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "Could not find a declaration file for module",
+        "Fix": "Install the corresponding type declarations or create your own declaration file.",
+        "Language": "TypeScript",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "DatabaseError: column does not exist",
+        "Fix": "Check the database schema and ensure the column is defined.",
+        "Language": "SQL",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "Uncaught ReferenceError: process is not defined",
+        "Fix": "Ensure you're using Node.js for server-side code.",
+        "Language": "JavaScript",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "Failed to compile JavaScript: Unexpected token",
+        "Fix": "Check the JavaScript syntax for any missing or extra characters.",
+        "Language": "JavaScript",
+        "Tool": "Webpack"
+    },
+    {
+        "Error": "Fatal error: Cannot read property 'constructor' of null",
+        "Fix": "Ensure you're not trying to access properties of null or undefined.",
+        "Language": "JavaScript",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "Error: Cannot find module 'react'",
+        "Fix": "Install React using npm: npm install react",
+        "Language": "JavaScript",
+        "Tool": "npm"
+    },
+    {
+        "Error": "Could not find the file 'config.json'",
+        "Fix": "Make sure the file exists and the path is correct.",
+        "Language": "JavaScript",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "TimeoutError",
+        "Fix": "Increase the timeout duration or check the network connection.",
+        "Language": "Python",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "Could not resolve hostname",
+        "Fix": "Check your DNS configuration or network connectivity.",
+        "Language": "N/A",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "Unexpected token 'export' in JSON",
+        "Fix": "Make sure the JSON file is correctly formatted and doesn't contain extra JavaScript.",
+        "Language": "JavaScript",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "Build failed: Cannot find source file",
+        "Fix": "Ensure the file path is correct and the file exists.",
+        "Language": "C++",
+        "Tool": "Make"
+    },
+    {
+        "Error": "Error: Module build failed",
+        "Fix": "Check for errors in your build script or configuration.",
+        "Language": "JavaScript",
+        "Tool": "Webpack"
+    },
+    {
+        "Error": "AccessDeniedException: User is not authorized to perform this action",
+        "Fix": "Check IAM permissions and policies for the user.",
+        "Language": "N/A",
+        "Tool": "AWS"
+    },
+    {
+        "Error": "Caused by: org.postgresql.util.PSQLException: Connection refused",
+        "Fix": "Check the database connection settings and ensure the server is running.",
+        "Language": "Java",
+        "Tool": "PostgreSQL"
+    },
+    {
+        "Error": "TypeError: Cannot destructure property 'name' of 'undefined' as it is undefined",
+        "Fix": "Ensure the object you're destructuring is properly initialized.",
+        "Language": "JavaScript",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "InvalidCastException: Unable to cast object",
+        "Fix": "Check the object types and ensure they are compatible for casting.",
+        "Language": "C#",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "SSLHandshakeException: handshake failed",
+        "Fix": "Check SSL certificates and ensure they are valid and properly configured.",
+        "Language": "Java",
+        "Tool": "N/A"
+    },
+    {
+        "Error": "Java.lang.NoClassDefFoundError",
+        "Fix": "Ensure that the class is present in the classpath.",
+        "Language": "Java",
+        "Tool": "Maven"
+    },
+    {
+        "Error": "Error: EINVAL: invalid argument, uv_pipe_open",
+        "Fix": "Check for incorrect or unsupported arguments when calling the function.",
+        "Language": "Node.js",
+        "Tool": "N/A"
+    }
+]

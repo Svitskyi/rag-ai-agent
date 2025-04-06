@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - GENERIC_TIMEZONE=Europe/Zurich
+      - TZ=Europe/Zurich
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=mydatabase
+      - DB_POSTGRESDB_USER=myuser
+      - DB_POSTGRESDB_PASSWORD=mypassword
+    volumes:
+      - ./n8n-data:/home/node/.n8n
+    networks:
+      - n8n-network
+    depends_on:
+      - postgres
+
+  postgres:
+    ports:
+      - "5432:5432"
+    image: pgvector/pgvector:pg16
+    environment:
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_DB=mydatabase
+    volumes:
+      - db_storage:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d/
+    networks:
+      - n8n-network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -h localhost -U myuser -d mydatabase']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+networks:
+  n8n-network:
+    driver: bridge
+
+volumes:
+  db_storage:
+  n8n_storage:
+
