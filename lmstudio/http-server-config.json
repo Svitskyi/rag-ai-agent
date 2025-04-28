@@ -1,0 +1,8 @@
+{
+  "port": 1234,
+  "cors": true,
+  "logSensitiveData": true,
+  "verbose": false,
+  "logLinesLimit": 500,
+  "networkInterface": "0.0.0.0"
+}
