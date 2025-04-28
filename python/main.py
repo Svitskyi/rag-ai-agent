@@ -3,30 +3,34 @@ import psycopg2
 import uuid
 import json
 import numpy as np
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_openai import OpenAIEmbeddings
 
-def load_google_api_key(file_path):
+def load_openai_config(file_path):
     with open(file_path, 'r') as file:
         config = json.load(file)
-        return config.get("google_api_key")
+        return config.get("openai_api_key"), config.get("openai_api_base")
 
-google_api_key = load_google_api_key('config.json')
-os.environ['GOOGLE_API_KEY'] = google_api_key
-embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004")
+openai_api_key, openai_api_base = load_openai_config('config.json')
+
+os.environ['OPENAI_API_KEY'] = openai_api_key
+os.environ['OPENAI_API_BASE'] = openai_api_base
+
+embeddings = OpenAIEmbeddings(
+    model="text-embedding-nomic-embed-text-v1.5-embedding",
+    openai_api_key=openai_api_key,
+    openai_api_base=openai_api_base,
+    check_embedding_ctx_length=False
+)
 
 def load_texts_from_json(file_path):
     with open(file_path, 'r') as file:
-        data = json.load(file)
-    return data
+        return json.load(file)
 
 texts = load_texts_from_json('texts.json')
 
 def normalize_embedding(embedding):
-    """Normalize the embedding vector to unit length."""
     norm = np.linalg.norm(embedding)
-    if norm == 0:
-        return embedding
-    return embedding / norm
+    return embedding if norm == 0 else embedding / norm
 
 def fetch_embeddings(texts):
     embedded_texts = []
@@ -36,21 +40,21 @@ def fetch_embeddings(texts):
         embedded_texts.append(normalized_embedding.tolist())
     return embedded_texts
 
+
 def generate_prefixed_uuid():
-    generated_uuid = uuid.uuid4()
-    return f"{generated_uuid}"
+    return str(uuid.uuid4())
+
 
 def check_error_exists(cursor, error_text):
     cursor.execute(
         "SELECT id FROM knowledge_base_error WHERE text = %s",
         (error_text,)
     )
-    existing_error = cursor.fetchone()
-    return existing_error is not None
+    return cursor.fetchone() is not None
+
 
 def save_error_fix_to_db(data):
-    cursor = None
-    connection = None
+    connection = cursor = None
     try:
         connection = psycopg2.connect(
             host="localhost",
@@ -67,11 +71,10 @@ def save_error_fix_to_db(data):
             tool = entry["Tool"]
 
             if check_error_exists(cursor, error_text):
-                print(f"Error '{error_text}' already exists in the database. Skipping insertion.")
+                print(f"Error '{error_text}' already exists. Skipping.")
                 continue
 
             error_embedding = fetch_embeddings([error_text])[0]
-
             reference = generate_prefixed_uuid()
 
             cursor.execute(
@@ -88,16 +91,16 @@ def save_error_fix_to_db(data):
             )
 
         connection.commit()
-        print(f"Inserted {len(data)} ERROR and FIX pairs into the knowledge_base table.")
+        print(f"Inserted {len(data)} ERROR and FIX pairs.")
 
     except Exception as error:
-        print(f"Error: {error}")
+        print(f"Database error: {error}")
 
     finally:
         if cursor:
             cursor.close()
         if connection:
             connection.close()
-        print("Connection closed.")
+        print("Database connection closed.")
 
 save_error_fix_to_db(texts)
